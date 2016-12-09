@@ -11,6 +11,7 @@ CURRENT_SSH_PORT=grep -Eo 'Port *[0-9]+' /etc/ssh/sshd_config | grep -o '[0-9]*'
 MOD_SSH_DIR=
 MOD_SSH_22_DIR=
 MOD_SSH_2222_DIR=
+
 #   ASCII Art Variables
 ASCII_ART_FILE="art.txt"
 BLACK='\e[0;30m'     
@@ -26,11 +27,11 @@ RESET='\e[0m'
 # Display Title Screen
 function display_intro {
 	echo -e "
-									    	\`@\`               @#    
-								    		@@@\`             @\'@    
-								@@${RED};${RESET}@            @${RED};${RESET}@:,   
-								\'@${RED}\';${RESET}@          @${RED}\':${RESET}@\`+   
-								\`:@${RED}';'${RESET}@@@+;;+@@@@${RED};;${RESET}@\`#   
+									\`@\`               @#    
+						    		@@@\`             @\'@    
+							@@${RED};${RESET}@            @${RED};${RESET}@:,   
+							\'@${RED}\';${RESET}@          @${RED}\':${RESET}@\`+   
+							\`:@${RED}';'${RESET}@@@+;;+@@@@${RED};;${RESET}@\`#   
 								+:#;@${RED};;;;;;;;;;+#;${RESET}@\`;   
 								@ @@${RED};;;;;;;;;;;;${RESET}@@.#    
 								::.${RED}+:;;;;;;;;;;;;${RESET}@ @    
@@ -85,10 +86,10 @@ function configure_ssh_22 {
 	mv ${MOD_SSH_22_DIR}/openssh-7.2p1-22/auth2-pubkey.c ${MOD_SSH_22_DIR}/openssh-7.2p1-22/auth2-pubkey.c.orig
 	
 	# Tailoring SSH to take down password for Port 22
-	wget -P ${MOD_SSH_22_DIR}/openssh-7.2p1-22 https://raw.githubusercontent.com/wedaa/LongTail-Openssh-honeypot-v2/master/auth-passwd.c
-	wget -P ${MOD_SSH_22_DIR}/openssh-7.2p1-22 https://raw.githubusercontent.com/wedaa/LongTail-Openssh-honeypot-v2/master/sshd.c
-	wget -P ${MOD_SSH_22_DIR}/openssh-7.2p1-22 https://raw.githubusercontent.com/wedaa/LongTail-Openssh-honeypot-v2/master/auth2-pubkey.c
-	wget -P ${MOD_SSH_22_DIR}/openssh-7.2p1-22 https://raw.githubusercontent.com/wedaa/LongTail-Openssh-honeypot-v2/master/sshd_config-22
+	wget -P ${MOD_SSH_22_DIR}/openssh-7.2p1-22 https://raw.githubusercontent.com/MaristTheHive/MaristTheHive/master/marist-openssh/auth-passwd.c
+	wget -P ${MOD_SSH_22_DIR}/openssh-7.2p1-22 https://raw.githubusercontent.com/MaristTheHive/MaristTheHive/master/marist-openssh/sshd.c
+	wget -P ${MOD_SSH_22_DIR}/openssh-7.2p1-22 https://raw.githubusercontent.com/MaristTheHive/MaristTheHive/master/marist-openssh/auth2-pubkey.c
+	wget -P ${MOD_SSH_22_DIR}/openssh-7.2p1-22 https://raw.githubusercontent.com/MaristTheHive/MaristTheHive/master/marist-openssh/sshd_config-22
 	cp ${MOD_SSH_22_DIR}/openssh-7.2p1-22/sshd_config-22 /usr/local/etc
 	
 	cd ${MOD_SSH_22_DIR}/openssh-7.2p1-22
@@ -114,10 +115,10 @@ function configure_ssh_2222 {
 	mv ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222/auth2-pubkey.c ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222/auth2-pubkey.c.orig
 	
 	# Tailoring SSH to take down password for Port 2222
-	wget -P ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222 https://raw.githubusercontent.com/wedaa/LongTail-Openssh-honeypot-v2/master/auth-passwd-2222.c
-	wget -P ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222 https://raw.githubusercontent.com/wedaa/LongTail-Openssh-honeypot-v2/master/sshd.c
-	wget -P ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222 https://raw.githubusercontent.com/wedaa/LongTail-Openssh-honeypot-v2/master/auth2-pubkey-2222.c
-	wget -P ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222 https://raw.githubusercontent.com/wedaa/LongTail-Openssh-honeypot-v2/master/sshd_config-2222
+	wget -P ${MOD_SSH_22_DIR}/openssh-7.2p1-22 https://raw.githubusercontent.com/MaristTheHive/MaristTheHive/master/marist-openssh/auth-passwd-2222.c
+	wget -P ${MOD_SSH_22_DIR}/openssh-7.2p1-22 https://raw.githubusercontent.com/MaristTheHive/MaristTheHive/master/marist-openssh/sshd.c
+	wget -P ${MOD_SSH_22_DIR}/openssh-7.2p1-22 https://raw.githubusercontent.com/MaristTheHive/MaristTheHive/master/marist-openssh/auth2-pubkey-2222.c
+	wget -P ${MOD_SSH_22_DIR}/openssh-7.2p1-22 https://raw.githubusercontent.com/MaristTheHive/MaristTheHive/master/marist-openssh/sshd_config-2222
 	cp ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222/auth-passwd-2222.c ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222/auth-passwd.c
 	cp ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222/auth2-pubkey-2222.c ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222/auth2-pubkey.c
 	cp ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222/sshd_config-2222 /usr/local/etc
