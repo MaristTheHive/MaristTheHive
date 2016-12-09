@@ -44,4 +44,18 @@ New Longtail Environment
 	- [ ] Create OVA's
 	- [ ] Look into Orchestration of entire environment
 	- [ ] Present to IT 
+	
+# License
+Hive is a Honeypot-Network Management Tool.
+
+Copyright (C) 2016 Marist College IT Department
+
+Some code used by Hive is directly based off of Eric Wedaa's work at Marist College.
+Files and code will be especially accredited to him and his contributors in each 
+source file. Some functionality of the Hive is directly based off of Eric Wedaa's
+Longtail project. 
+
+A copy of the Apache License is available in this repository in the [LICENSE.txt] file.
+
+
 
