@@ -55,7 +55,7 @@ Files and code will be especially accredited to him and his contributors in each
 source file. Some functionality of the Hive is directly based off of Eric Wedaa's
 Longtail project. 
 
-A copy of the Apache License is available in this repository in the [LICENSE.txt] file.
+A copy of the Apache License is available in this repository in the [LICENSE.txt](LICENSE.txt) file.
 
 
 
