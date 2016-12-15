@@ -106,10 +106,10 @@ function configure_ssh_2222 {
 	mv ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222/auth2-pubkey.c ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222/auth2-pubkey.c.orig
 	
 	# Tailoring SSH to take down password for Port 2222
-	cp auth-passwd-2222.c ${MOD_SSH_22_DIR}/openssh-7.2p1-22/auth-passwd.c
-	cp sshd.c ${MOD_SSH_22_DIR}/openssh-7.2p1-22/sshd.c
-	cp auth2-pubkey-2222.c ${MOD_SSH_22_DIR}/openssh-7.2p1-22/auth2-pubkey.c
-	cp sshd_config-2222 ${MOD_SSH_22_DIR}/openssh-7.2p1-22/sshd_config-22
+	cp auth-passwd-2222.c ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222/auth-passwd.c
+	cp sshd.c ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222/sshd.c
+	cp auth2-pubkey-2222.c ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222/auth2-pubkey.c
+	cp sshd_config-2222 ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222/sshd_config-22
 	#wget -P ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222 https://raw.githubusercontent.com/MaristTheHive/MaristTheHive/master/marist-openssh/auth-passwd-2222.c
 	#wget -P ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222 https://raw.githubusercontent.com/MaristTheHive/MaristTheHive/master/marist-openssh/sshd.c
 	#wget -P ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222 https://raw.githubusercontent.com/MaristTheHive/MaristTheHive/master/marist-openssh/auth2-pubkey-2222.c
