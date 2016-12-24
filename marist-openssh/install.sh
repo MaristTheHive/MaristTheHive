@@ -6,13 +6,14 @@
 #################################################################################################
 
 # Initializing Global Variables
-STARTING_DIRECTORY="${PWD}"
+STARTING_DIRECTORY=$(pwd)
+echo $STARTING_DIRECTORY
 CURRENT_SSH_PORT=$(grep -Eo 'Port *[0-9]+' /etc/ssh/sshd_config | grep -o '[0-9]*')
 MOD_SSH_DIR=
 MOD_SSH_22_DIR=
 MOD_SSH_2222_DIR=
 
-#   ASCII Art Variables
+# ASCII Art Variables
 BLACK='\e[0;30m'     
 RED='\e[0;31m'
 GREEN='\e[0;32m'
@@ -25,22 +26,7 @@ RESET='\e[0m'
 
 # Display Title Screen
 function display_intro {
-	echo -e 
-	"
-						/\      /\
-		                |\\____//|
-		                (|/    \/ )
-		                / (    ) \
-		  |||||||\\\  )   %)  (%   (  ///|||||||
-		  ||           )  \\  |/  (           ||
-		  ||            )  \\ |/  (           ||
-		    ||           /-- \@)--\         ||
-		    ||       |              |       ||
-		  ||         ||            ||         ||
-		  ||         |||          |||         ||
-		  ||         ||||        ||||         ||
-		  |||||||||||||  \|    |/  |||||||||||||
-		  "
+	echo "Hello World"
 }
 
 # Install dependencies 
@@ -79,16 +65,11 @@ function configure_ssh_22 {
 	cp ${STARTING_DIRECTORY}/auth-passwd.c ${MOD_SSH_22_DIR}/openssh-7.2p1-22/auth-passwd.c
 	cp ${STARTING_DIRECTORY}/sshd.c ${MOD_SSH_22_DIR}/openssh-7.2p1-22/sshd.c
 	cp ${STARTING_DIRECTORY}/auth2-pubkey.c ${MOD_SSH_22_DIR}/openssh-7.2p1-22/auth2-pubkey.c
-	cp ${STARTING_DIRECTORY}/sshd_config-22 ${MOD_SSH_22_DIR}/openssh-7.2p1-22/sshd_config-22
-	#wget -P ${MOD_SSH_22_DIR}/openssh-7.2p1-22 https://raw.githubusercontent.com/MaristTheHive/MaristTheHive/master/marist-openssh/auth-passwd.c
-	#wget -P ${MOD_SSH_22_DIR}/openssh-7.2p1-22 https://raw.githubusercontent.com/MaristTheHive/MaristTheHive/master/marist-openssh/sshd.c
-	#wget -P ${MOD_SSH_22_DIR}/openssh-7.2p1-22 https://raw.githubusercontent.com/MaristTheHive/MaristTheHive/master/marist-openssh/auth2-pubkey.c
-	#wget -P ${MOD_SSH_22_DIR}/openssh-7.2p1-22 https://raw.githubusercontent.com/MaristTheHive/MaristTheHive/master/marist-openssh/sshd_config-22
-	cp ${MOD_SSH_22_DIR}/openssh-7.2p1-22/sshd_config-22 /usr/local/etc
+	cp ${STARTING_DIRECTORY}/sshd_config-22 /usr/local/etc/sshd_config-22
+	#cp ${MOD_SSH_22_DIR}/openssh-7.2p1-22/sshd_config-22 /usr/local/etc
 	
 	echo "Compiling & nstalling SSH..."
 	cd ${MOD_SSH_22_DIR}/openssh-7.2p1-22
-	pwd
 	./configure
 	make
 	make install
@@ -111,21 +92,19 @@ function configure_ssh_2222 {
 	
 	# Tailoring SSH to take down password for Port 2222
 	echo "Copying SSH-2222 files..."
+	echo "${STARTING_DIRECTORY} "
 	cp ${STARTING_DIRECTORY}/auth-passwd-2222.c ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222/auth-passwd.c
 	cp ${STARTING_DIRECTORY}/sshd.c ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222/sshd.c
 	cp ${STARTING_DIRECTORY}/auth2-pubkey-2222.c ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222/auth2-pubkey.c
-	cp ${STARTING_DIRECTORY}/sshd_config-2222 ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222/sshd_config-22
+	cp ${STARTING_DIRECTORY}/sshd_config-2222 /usr/local/etc/sshd_config-2222
 	#wget -P ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222 https://raw.githubusercontent.com/MaristTheHive/MaristTheHive/master/marist-openssh/auth-passwd-2222.c
 	#wget -P ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222 https://raw.githubusercontent.com/MaristTheHive/MaristTheHive/master/marist-openssh/sshd.c
 	#wget -P ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222 https://raw.githubusercontent.com/MaristTheHive/MaristTheHive/master/marist-openssh/auth2-pubkey-2222.c
 	#wget -P ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222 https://raw.githubusercontent.com/MaristTheHive/MaristTheHive/master/marist-openssh/sshd_config-2222
-	cp ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222/auth-passwd-2222.c ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222/auth-passwd.c
-	cp ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222/auth2-pubkey-2222.c ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222/auth2-pubkey.c
-	cp ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222/sshd_config-2222 /usr/local/etc
+	#cp ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222/sshd_config-2222 /usr/local/etc
 	
 	echo "Compiling & installing SSH-2222..."
 	cd ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222
-	pwd
 	./configure
 	make
 	cp sshd /usr/local/sbin/sshd-2222
@@ -139,7 +118,6 @@ function finalize_configuration {
 	echo "/usr/local/sbin/sshd-2222 -f /usr/local/etc/sshd_config-2222 " >> /etc/rc.local
 	
 	cd $STARTING_DIRECTORY
-	break
 }
 
 display_intro
@@ -148,11 +126,11 @@ do
 	echo -n "Please specify the port that SSH should be changed to (we recommend 48000-65535):"
 	read SSH_PORT
 	sed -i "0,/RE/s/Port .*/Port ${SSH_PORT}/g" /etc/ssh/sshd_config
-	$CURRENT_SSH_PORT=$SSH_PORT
+	CURRENT_SSH_PORT=$SSH_PORT
 	
 	echo "${CURRENT_SSH_PORT} is the Current SSH Port"
 	
-	if [[$CURRENT_SSH_PORT != "22"]] || [[$CURRENT_SSH_PORT != "2222"]]
+	if [ "${CURRENT_SSH_PORT}" -ne "22" ] || [ "${CURRENT_SSH_PORT}" -ne "2222" ]
 	then
 		service ssh restart
 		
@@ -161,6 +139,9 @@ do
 		configure_ssh_22
 		configure_ssh_2222
 		finalize_configuration
+		break
 	fi
 done
-exit 0
+
+echo "End of Script"
+exit
