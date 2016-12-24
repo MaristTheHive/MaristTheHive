@@ -152,10 +152,8 @@ do
 	
 	echo "${CURRENT_SSH_PORT} is the Current SSH Port"
 	
-	if [[ $CURRENT_SSH_PORT -eq "22" || $CURRENT_SSH_PORT -eq "2222"]]
+	if [[ $CURRENT_SSH_PORT != "22" || $CURRENT_SSH_PORT != "2222"]]
 	then
-		echo "Please choose a recommended SSH Port"
-	else
 		service ssh restart
 		
 		install_dependencies
