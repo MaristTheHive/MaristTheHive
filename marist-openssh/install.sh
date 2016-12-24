@@ -7,7 +7,7 @@
 
 # Initializing Global Variables
 STARTING_DIRECTORY="${PWD}"
-CURRENT_SSH_PORT=grep -Eo 'Port *[0-9]+' /etc/ssh/sshd_config | grep -o '[0-9]*'
+CURRENT_SSH_PORT=$(grep -Eo 'Port *[0-9]+' /etc/ssh/sshd_config | grep -o '[0-9]*')
 MOD_SSH_DIR=
 MOD_SSH_22_DIR=
 MOD_SSH_2222_DIR=
@@ -26,7 +26,8 @@ RESET='\e[0m'
 
 # Display Title Screen
 function display_intro {
-	echo -e "
+	echo -e 
+	"
 						/\      /\
 		                |\\____//|
 		                (|/    \/ )
@@ -40,7 +41,7 @@ function display_intro {
 		  ||         |||          |||         ||
 		  ||         ||||        ||||         ||
 		  |||||||||||||  \|    |/  |||||||||||||
-	"
+		  "
 }
 
 # Install dependencies 
@@ -132,7 +133,7 @@ function finalize_configuration {
 	echo "/usr/local/sbin/sshd-22 -f /usr/local/etc/sshd_config-22 " >> /etc/rc.local
 	echo "/usr/local/sbin/sshd-2222 -f /usr/local/etc/sshd_config-2222 " >> /etc/rc.local
 	
-	cd ${STARTING_DIRECTORY}
+	cd $STARTING_DIRECTORY
 	break
 }
 
@@ -142,10 +143,13 @@ do
 	echo -n "Please specify the port that SSH should be changed to (we recommend 48000-65535):"
 	read SSH_PORT
 	sed -i "0,/RE/s/Port .*/Port ${SSH_PORT}/g" /etc/ssh/sshd_config
-	CURRENT_SSH_PORT=$SSH_PORT
+	$CURRENT_SSH_PORT=$SSH_PORT
+	echo "${CURRENT_SSH_PORT} is the Current SSH Port"
 	
-	if [[CURRENT_SSH_PORT="22" || CURRENT_SSH_PORT="2222"]]
+	if [[ $CURRENT_SSH_PORT -eq "22" || $CURRENT_SSH_PORT -eq "2222"]]
 	then
+		echo "Please choose a recommended SSH Port"
+	else
 		service ssh restart
 		
 		install_dependencies
