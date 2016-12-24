@@ -12,6 +12,7 @@ CURRENT_SSH_PORT=$(grep -Eo 'Port *[0-9]+' /etc/ssh/sshd_config | grep -o '[0-9]
 MOD_SSH_DIR=
 MOD_SSH_22_DIR=
 MOD_SSH_2222_DIR=
+OPENSSH_VERSION=7.2
 
 # ASCII Art Variables
 BLACK='\e[0;30m'     
@@ -50,26 +51,26 @@ function create_dir {
 # Function to tailor OpenSSH 22
 function configure_ssh_22 {
 	# Downloading OpenSSH
-	wget -P ${MOD_SSH_22_DIR} ftp://ftp4.usa.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-7.2p1.tar.gz
+	wget -P ${MOD_SSH_22_DIR} ftp://ftp4.usa.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-${OPENSSH_VERSION}p1.tar.gz
 	cd ${MOD_SSH_22_DIR}
-	tar -xf ${MOD_SSH_22_DIR}/openssh-7.2p1.tar.gz 
-	mv ${MOD_SSH_22_DIR}/openssh-7.2p1 ${MOD_SSH_22_DIR}/openssh-7.2p1-22
+	tar -xf ${MOD_SSH_22_DIR}/openssh-${OPENSSH_VERSION}p1.tar.gz 
+	mv ${MOD_SSH_22_DIR}/openssh-${OPENSSH_VERSION}p1 ${MOD_SSH_22_DIR}/openssh-${OPENSSH_VERSION}p1-22
 	
 	# Copying original files
-	mv ${MOD_SSH_22_DIR}/openssh-7.2p1-22/auth-passwd.c ${MOD_SSH_22_DIR}/openssh-7.2p1-22/auth-passwd.c.orig
-	mv ${MOD_SSH_22_DIR}/openssh-7.2p1-22/sshd.c ${MOD_SSH_22_DIR}/openssh-7.2p1-22/sshd.c.orig
-	mv ${MOD_SSH_22_DIR}/openssh-7.2p1-22/auth2-pubkey.c ${MOD_SSH_22_DIR}/openssh-7.2p1-22/auth2-pubkey.c.orig
+	mv ${MOD_SSH_22_DIR}/openssh-${OPENSSH_VERSION}p1-22/auth-passwd.c ${MOD_SSH_22_DIR}/openssh-${OPENSSH_VERSION}p1-22/auth-passwd.c.orig
+	mv ${MOD_SSH_22_DIR}/openssh-${OPENSSH_VERSION}p1-22/sshd.c ${MOD_SSH_22_DIR}/openssh-${OPENSSH_VERSION}p1-22/sshd.c.orig
+	mv ${MOD_SSH_22_DIR}/openssh-${OPENSSH_VERSION}p1-22/auth2-pubkey.c ${MOD_SSH_22_DIR}/openssh-${OPENSSH_VERSION}p1-22/auth2-pubkey.c.orig
 	
 	# Tailoring SSH to take down password for Port 22
 	echo "Copying SSH files..."
-	cp ${STARTING_DIRECTORY}/auth-passwd.c ${MOD_SSH_22_DIR}/openssh-7.2p1-22/auth-passwd.c
-	cp ${STARTING_DIRECTORY}/sshd.c ${MOD_SSH_22_DIR}/openssh-7.2p1-22/sshd.c
-	cp ${STARTING_DIRECTORY}/auth2-pubkey.c ${MOD_SSH_22_DIR}/openssh-7.2p1-22/auth2-pubkey.c
+	cp ${STARTING_DIRECTORY}/auth-passwd.c ${MOD_SSH_22_DIR}/openssh-${OPENSSH_VERSION}p1-22/auth-passwd.c
+	cp ${STARTING_DIRECTORY}/sshd.c ${MOD_SSH_22_DIR}/openssh-${OPENSSH_VERSION}p1-22/sshd.c
+	cp ${STARTING_DIRECTORY}/auth2-pubkey.c ${MOD_SSH_22_DIR}/openssh-${OPENSSH_VERSION}p1-22/auth2-pubkey.c
 	cp ${STARTING_DIRECTORY}/sshd_config-22 /usr/local/etc/sshd_config-22
-	#cp ${MOD_SSH_22_DIR}/openssh-7.2p1-22/sshd_config-22 /usr/local/etc
+	#cp ${MOD_SSH_22_DIR}/openssh-${OPENSSH_VERSION}p1-22/sshd_config-22 /usr/local/etc
 	
 	echo "Compiling & nstalling SSH..."
-	cd ${MOD_SSH_22_DIR}/openssh-7.2p1-22
+	cd ${MOD_SSH_22_DIR}/openssh-${OPENSSH_VERSION}p1-22
 	./configure
 	make
 	make install
@@ -80,31 +81,31 @@ function configure_ssh_22 {
 # Function to tailor OpenSSH 2222
 function configure_ssh_2222 {
 	# Downloading OpenSSH
-	wget -P ${MOD_SSH_2222_DIR} ftp://ftp4.usa.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-7.2p1.tar.gz
+	wget -P ${MOD_SSH_2222_DIR} ftp://ftp4.usa.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-${OPENSSH_VERSION}p1.tar.gz
 	cd ${MOD_SSH_2222_DIR}
-	tar -xf ${MOD_SSH_2222_DIR}/openssh-7.2p1.tar.gz
-	mv ${MOD_SSH_2222_DIR}/openssh-7.2p1 ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222
+	tar -xf ${MOD_SSH_2222_DIR}/openssh-${OPENSSH_VERSION}p1.tar.gz
+	mv ${MOD_SSH_2222_DIR}/openssh-${OPENSSH_VERSION}p1 ${MOD_SSH_2222_DIR}/openssh-${OPENSSH_VERSION}p1-2222
 	
 	# Copying original files
-	mv ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222/auth-passwd.c ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222/auth-passwd.c.orig
-	mv ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222/sshd.c ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222/sshd.c.orig
-	mv ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222/auth2-pubkey.c ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222/auth2-pubkey.c.orig
+	mv ${MOD_SSH_2222_DIR}/openssh-${OPENSSH_VERSION}p1-2222/auth-passwd.c ${MOD_SSH_2222_DIR}/openssh-${OPENSSH_VERSION}p1-2222/auth-passwd.c.orig
+	mv ${MOD_SSH_2222_DIR}/openssh-${OPENSSH_VERSION}p1-2222/sshd.c ${MOD_SSH_2222_DIR}/openssh-${OPENSSH_VERSION}p1-2222/sshd.c.orig
+	mv ${MOD_SSH_2222_DIR}/openssh-${OPENSSH_VERSION}p1-2222/auth2-pubkey.c ${MOD_SSH_2222_DIR}/openssh-${OPENSSH_VERSION}p1-2222/auth2-pubkey.c.orig
 	
 	# Tailoring SSH to take down password for Port 2222
 	echo "Copying SSH-2222 files..."
 	echo "${STARTING_DIRECTORY} "
-	cp ${STARTING_DIRECTORY}/auth-passwd-2222.c ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222/auth-passwd.c
-	cp ${STARTING_DIRECTORY}/sshd.c ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222/sshd.c
-	cp ${STARTING_DIRECTORY}/auth2-pubkey-2222.c ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222/auth2-pubkey.c
+	cp ${STARTING_DIRECTORY}/auth-passwd-2222.c ${MOD_SSH_2222_DIR}/openssh-${OPENSSH_VERSION}p1-2222/auth-passwd.c
+	cp ${STARTING_DIRECTORY}/sshd.c ${MOD_SSH_2222_DIR}/openssh-${OPENSSH_VERSION}p1-2222/sshd.c
+	cp ${STARTING_DIRECTORY}/auth2-pubkey-2222.c ${MOD_SSH_2222_DIR}/openssh-${OPENSSH_VERSION}p1-2222/auth2-pubkey.c
 	cp ${STARTING_DIRECTORY}/sshd_config-2222 /usr/local/etc/sshd_config-2222
-	#wget -P ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222 https://raw.githubusercontent.com/MaristTheHive/MaristTheHive/master/marist-openssh/auth-passwd-2222.c
-	#wget -P ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222 https://raw.githubusercontent.com/MaristTheHive/MaristTheHive/master/marist-openssh/sshd.c
-	#wget -P ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222 https://raw.githubusercontent.com/MaristTheHive/MaristTheHive/master/marist-openssh/auth2-pubkey-2222.c
-	#wget -P ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222 https://raw.githubusercontent.com/MaristTheHive/MaristTheHive/master/marist-openssh/sshd_config-2222
-	#cp ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222/sshd_config-2222 /usr/local/etc
+	#wget -P ${MOD_SSH_2222_DIR}/openssh-${OPENSSH_VERSION}p1-2222 https://raw.githubusercontent.com/MaristTheHive/MaristTheHive/master/marist-openssh/auth-passwd-2222.c
+	#wget -P ${MOD_SSH_2222_DIR}/openssh-${OPENSSH_VERSION}p1-2222 https://raw.githubusercontent.com/MaristTheHive/MaristTheHive/master/marist-openssh/sshd.c
+	#wget -P ${MOD_SSH_2222_DIR}/openssh-${OPENSSH_VERSION}p1-2222 https://raw.githubusercontent.com/MaristTheHive/MaristTheHive/master/marist-openssh/auth2-pubkey-2222.c
+	#wget -P ${MOD_SSH_2222_DIR}/openssh-${OPENSSH_VERSION}p1-2222 https://raw.githubusercontent.com/MaristTheHive/MaristTheHive/master/marist-openssh/sshd_config-2222
+	#cp ${MOD_SSH_2222_DIR}/openssh-${OPENSSH_VERSION}p1-2222/sshd_config-2222 /usr/local/etc
 	
 	echo "Compiling & installing SSH-2222..."
-	cd ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222
+	cd ${MOD_SSH_2222_DIR}/openssh-${OPENSSH_VERSION}p1-2222
 	./configure
 	make
 	cp sshd /usr/local/sbin/sshd-2222
