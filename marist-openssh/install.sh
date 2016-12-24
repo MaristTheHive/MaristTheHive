@@ -4,6 +4,7 @@
 #                                  MARIST SSH HONEYPOT v0.1                                     #
 #                             MARIST COLLEGE NETWORKING DEPARTMENT                              #
 #################################################################################################
+STARTING_DIRECTORY=$(pwd)
 
 # Checking to make sure that SSH port has been
 # changed tosomething other than port 22 or 2222
@@ -41,9 +42,9 @@ else
 	mv sshd.c sshd.c.orig
 	mv auth2-pubkey.c auth2-pubkey.c.orig
 	echo "Downloading tailored files from github..."
-	cp ${STARTING_DIRECTORY}/auth-passwd.c ${MOD_SSH_22_DIR}/openssh-7.2p1-22/auth-passwd.c
-	cp ${STARTING_DIRECTORY}/sshd.c ${MOD_SSH_22_DIR}/openssh-7.2p1-22/sshd.c
-	cp ${STARTING_DIRECTORY}/auth2-pubkey.c ${MOD_SSH_22_DIR}/openssh-7.2p1-22/auth2-pubkey.c
+	cp ${STARTING_DIRECTORY}/auth-passwd.c auth-passwd.c
+	cp ${STARTING_DIRECTORY}/sshd.c sshd.c
+	cp ${STARTING_DIRECTORY}/auth2-pubkey.c auth2-pubkey.c
 	cp ${STARTING_DIRECTORY}/sshd_config-22 /usr/local/etc/sshd_config-22
 	echo "Copying sshd_config-22 to /usr/local/etc"
 	
@@ -76,9 +77,9 @@ else
 	mv sshd.c sshd.c.orig
 	mv auth2-pubkey.c auth2-pubkey.c.orig
 	echo "Downloading tailored files from github..."
-	cp ${STARTING_DIRECTORY}/auth-passwd-2222.c ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222/auth-passwd.c
-	cp ${STARTING_DIRECTORY}/sshd.c ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222/sshd.c
-	cp ${STARTING_DIRECTORY}/auth2-pubkey-2222.c ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222/auth2-pubkey.c
+	cp ${STARTING_DIRECTORY}/auth-passwd-2222.c auth-passwd.c
+	cp ${STARTING_DIRECTORY}/sshd.c sshd.c
+	cp ${STARTING_DIRECTORY}/auth2-pubkey-2222.c auth2-pubkey.c
 	cp ${STARTING_DIRECTORY}/sshd_config-2222 /usr/local/etc/sshd_config-2222
 	echo "Renaming files to fit ssh program"
 	
