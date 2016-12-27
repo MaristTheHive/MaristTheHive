@@ -29,7 +29,7 @@ RESET='\e[0m'
 function display_intro {
 	cat<<"EOT"
 
-					    /\      /\
+	                        /\      /\
 		                |\\____//|
 		                (|/    \/ )
 		                / (    ) \
@@ -130,7 +130,6 @@ function finalize_configuration {
 	echo "/usr/local/sbin/sshd-2222 -f /usr/local/etc/sshd_config-2222 " >> /etc/rc.local
 	
 	cd $STARTING_DIRECTORY
-	IS_RUNNING=false
 }
 
 display_intro
@@ -150,7 +149,8 @@ do
 		configure_ssh_22
 		configure_ssh_2222
 		finalize_configuration
-		echo $STARTING_DIRECTORY
+		IS_RUNNING=false
+		break
 	fi
 done
 
