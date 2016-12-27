@@ -27,8 +27,24 @@ RESET='\e[0m'
 
 # Display Title Screen
 function display_intro {
-	echo "${IS_RUNNING}"
-	echo "Hello World"
+	cat<<"EOT"
+
+					    /\      /\
+		                |\\____//|
+		                (|/    \/ )
+		                / (    ) \
+		  |||||||\\\  )   %)  (%   (  ///|||||||
+		  ||           )  \\  |/  (           ||
+		  ||            )  \\ |/  (           ||
+		    ||           /-- \@)--\         ||
+		    ||       |              |       ||
+		  ||         ||            ||         ||
+		  ||         |||          |||         ||
+		  ||         ||||        ||||         ||
+		  |||||||||||||  \|    |/  |||||||||||||
+
+EOT
+
 }
 
 # Install dependencies 
@@ -68,7 +84,6 @@ function configure_ssh_22 {
 	cp ${STARTING_DIRECTORY}/sshd.c ${MOD_SSH_22_DIR}/openssh-7.2p1-22/sshd.c
 	cp ${STARTING_DIRECTORY}/auth2-pubkey.c ${MOD_SSH_22_DIR}/openssh-7.2p1-22/auth2-pubkey.c
 	cp ${STARTING_DIRECTORY}/sshd_config-22 /usr/local/etc/sshd_config-22
-	#cp ${MOD_SSH_22_DIR}/openssh-7.2p1-22/sshd_config-22 /usr/local/etc
 	
 	echo "Compiling & nstalling SSH..."
 	cd ${MOD_SSH_22_DIR}/openssh-7.2p1-22
@@ -99,11 +114,6 @@ function configure_ssh_2222 {
 	cp ${STARTING_DIRECTORY}/sshd.c ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222/sshd.c
 	cp ${STARTING_DIRECTORY}/auth2-pubkey-2222.c ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222/auth2-pubkey.c
 	cp ${STARTING_DIRECTORY}/sshd_config-2222 /usr/local/etc/sshd_config-2222
-	#wget -P ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222 https://raw.githubusercontent.com/MaristTheHive/MaristTheHive/master/marist-openssh/auth-passwd-2222.c
-	#wget -P ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222 https://raw.githubusercontent.com/MaristTheHive/MaristTheHive/master/marist-openssh/sshd.c
-	#wget -P ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222 https://raw.githubusercontent.com/MaristTheHive/MaristTheHive/master/marist-openssh/auth2-pubkey-2222.c
-	#wget -P ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222 https://raw.githubusercontent.com/MaristTheHive/MaristTheHive/master/marist-openssh/sshd_config-2222
-	#cp ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222/sshd_config-2222 /usr/local/etc
 	
 	echo "Compiling & installing SSH-2222..."
 	cd ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222
@@ -131,8 +141,6 @@ do
 	sed -i "0,/RE/s/Port .*/Port ${SSH_PORT}/g" /etc/ssh/sshd_config
 	CURRENT_SSH_PORT=$SSH_PORT
 	
-	echo "${CURRENT_SSH_PORT} is the Current SSH Port"
-	
 	if [ "$CURRENT_SSH_PORT" -ne 22 ] || [ "$CURRENT_SSH_PORT" -ne 2222 ]
 	then
 		service ssh restart
@@ -142,8 +150,8 @@ do
 		configure_ssh_22
 		configure_ssh_2222
 		finalize_configuration
+		echo $STARTING_DIRECTORY
 	fi
 done
 
-echo "End of Script"
 exit
