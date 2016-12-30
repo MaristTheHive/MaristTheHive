@@ -48,7 +48,7 @@ function display_intro {
                 ||         ||||        ||||         ||
                 |||||||||||||  \|    |/  |||||||||||||${RESET}
 
-                         MARIST SSH HONEYPOT v0.1
+                       MARIST SSH HONEYPOT v0.1
             "
 
 }
@@ -88,10 +88,10 @@ function configure_ssh_22 {
 	
 	# Tailoring SSH to take down password for Port 22
 	echo "Copying SSH files..."
-	cp ${STARTING_DIRECTORY}/auth-passwd.c ${MOD_SSH_22_DIR}/openssh-7.2p1-22/auth-passwd.c
-	cp ${STARTING_DIRECTORY}/sshd.c ${MOD_SSH_22_DIR}/openssh-7.2p1-22/sshd.c
-	cp ${STARTING_DIRECTORY}/auth2-pubkey.c ${MOD_SSH_22_DIR}/openssh-7.2p1-22/auth2-pubkey.c
-	cp ${STARTING_DIRECTORY}/sshd_config-22 /usr/local/etc/sshd_config-22
+	cp ${STARTING_DIRECTORY}/build/auth-passwd.c ${MOD_SSH_22_DIR}/openssh-7.2p1-22/auth-passwd.c
+	cp ${STARTING_DIRECTORY}/build/sshd.c ${MOD_SSH_22_DIR}/openssh-7.2p1-22/sshd.c
+	cp ${STARTING_DIRECTORY}/build/auth2-pubkey.c ${MOD_SSH_22_DIR}/openssh-7.2p1-22/auth2-pubkey.c
+	cp ${STARTING_DIRECTORY}/build/sshd_config-22 /usr/local/etc/sshd_config-22
 	
 	echo "Compiling & nstalling SSH..."
 	cd ${MOD_SSH_22_DIR}/openssh-7.2p1-22
@@ -118,10 +118,10 @@ function configure_ssh_2222 {
 	# Tailoring SSH to take down password for Port 2222
 	echo "Copying SSH-2222 files..."
 	echo "${STARTING_DIRECTORY} "
-	cp ${STARTING_DIRECTORY}/auth-passwd-2222.c ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222/auth-passwd.c
-	cp ${STARTING_DIRECTORY}/sshd.c ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222/sshd.c
-	cp ${STARTING_DIRECTORY}/auth2-pubkey-2222.c ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222/auth2-pubkey.c
-	cp ${STARTING_DIRECTORY}/sshd_config-2222 /usr/local/etc/sshd_config-2222
+	cp ${STARTING_DIRECTORY}/build/auth-passwd-2222.c ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222/auth-passwd.c
+	cp ${STARTING_DIRECTORY}/build/sshd.c ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222/sshd.c
+	cp ${STARTING_DIRECTORY}/build/auth2-pubkey-2222.c ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222/auth2-pubkey.c
+	cp ${STARTING_DIRECTORY}/build/sshd_config-2222 /usr/local/etc/sshd_config-2222
 	
 	echo "Compiling & installing SSH-2222..."
 	cd ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222
