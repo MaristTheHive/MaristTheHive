@@ -6,7 +6,7 @@
 #################################################################################################
 
 
-############################## Initializing Global Variables#####################################
+####################################### Global Variables ########################################
 
 STARTING_DIRECTORY=$(pwd)
 echo $STARTING_DIRECTORY
@@ -15,6 +15,7 @@ MOD_SSH_DIR=
 MOD_SSH_22_DIR=
 MOD_SSH_2222_DIR=
 IS_RUNNING=true
+LOG_DIR=
 
 # ASCII Art Variables
 BLACK='\e[0;30m'     
@@ -70,18 +71,20 @@ function create_dir {
 	mkdir -p /usr/local/source/openssh
 	mkdir /usr/local/source/openssh/openssh-22
 	mkdir /usr/local/source/openssh/openssh-2222
+	mkdir /var/log/ssh-honeypot
 	MOD_SSH_DIR="/usr/local/source/openssh"
 	MOD_SSH_22_DIR="/usr/local/source/openssh/openssh-22"
 	MOD_SSH_2222_DIR="/usr/local/source/openssh/openssh-2222"
+	LOG_DIR="/var/log/ssh-honeypot"
 	echo "Created ${MOD_SSH_DIR};${MOD_SSH_22_DIR};${MOD_SSH_2222_DIR}"
 }
 
 # Function to tailor OpenSSH 22
 function configure_ssh_22 {
 	# Downloading OpenSSH
-	wget -P ${MOD_SSH_22_DIR} ftp://ftp4.usa.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-7.2p1.tar.gz
+	wget -P ${MOD_SSH_22_DIR} ftp://ftp4.usa.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-7.2p1.tar.gz > "${LOG_DIR}/install-22.log"
 	cd ${MOD_SSH_22_DIR}
-	tar -xf ${MOD_SSH_22_DIR}/openssh-7.2p1.tar.gz 
+	tar -xf ${MOD_SSH_22_DIR}/openssh-7.2p1.tar.gz >> "${LOG_DIR}/install-22.log"
 	mv ${MOD_SSH_22_DIR}/openssh-7.2p1 ${MOD_SSH_22_DIR}/openssh-7.2p1-22
 	
 	# Copying original files
@@ -98,9 +101,9 @@ function configure_ssh_22 {
 	
 	echo "Compiling & nstalling SSH..."
 	cd ${MOD_SSH_22_DIR}/openssh-7.2p1-22
-	./configure
-	make
-	make install
+	./configure >> "${LOG_DIR}/install-22.log"
+	make >> "${LOG_DIR}/install-22.log"
+	make install >> "${LOG_DIR}/install-22.log"
 	cp sshd /usr/local/sbin/sshd-22
 	chmod a+rx sshd /usr/local/sbin/sshd-22
 }
@@ -108,9 +111,9 @@ function configure_ssh_22 {
 # Function to tailor OpenSSH 2222
 function configure_ssh_2222 {
 	# Downloading OpenSSH
-	wget -P ${MOD_SSH_2222_DIR} ftp://ftp4.usa.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-7.2p1.tar.gz
+	wget -P ${MOD_SSH_2222_DIR} ftp://ftp4.usa.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-7.2p1.tar.gz > "${LOG_DIR}/install-2222.log"
 	cd ${MOD_SSH_2222_DIR}
-	tar -xf ${MOD_SSH_2222_DIR}/openssh-7.2p1.tar.gz
+	tar -xf ${MOD_SSH_2222_DIR}/openssh-7.2p1.tar.gz >> "${LOG_DIR}/install-2222.log"
 	mv ${MOD_SSH_2222_DIR}/openssh-7.2p1 ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222
 	
 	# Copying original files
@@ -128,8 +131,8 @@ function configure_ssh_2222 {
 	
 	echo "Compiling & installing SSH-2222..."
 	cd ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222
-	./configure
-	make
+	./configure >> "${LOG_DIR}/install-2222.log"
+	make >> "${LOG_DIR}/install-2222.log"
 	cp sshd /usr/local/sbin/sshd-2222
 	chmod a+rx sshd /usr/local/sbin/sshd-2222
 }
