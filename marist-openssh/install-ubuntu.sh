@@ -5,7 +5,9 @@
 #                             MARIST COLLEGE NETWORKING DEPARTMENT                              #
 #################################################################################################
 
-# Initializing Global Variables
+
+############################## Initializing Global Variables#####################################
+
 STARTING_DIRECTORY=$(pwd)
 echo $STARTING_DIRECTORY
 CURRENT_SSH_PORT=$(grep -Eo 'Port *[0-9]+' /etc/ssh/sshd_config | grep -o '[0-9]*')
@@ -25,32 +27,38 @@ CYAN='\e[0;36m'
 WHITE='\e[0;37m'
 RESET='\e[0m'
 
+#################################################################################################
+
+# Check if user is root
 if [ "$EUID" -ne 0 ]
 then 
-	echo "Please run as root"
+	echo -e "${RED}Please run as root${RESET}"
 	exit 1
 fi
 
-
 # Display Title Screen
 function display_intro {
-	cat<<"EOT"
+	cat<<EOF
 
                               /\      /\
+
                               |\\____//|
+
                               (|/    \/ )
+
                               / (    ) \
-                |||||||\\\  )   %)  (%   (  ///|||||||
-                ||           )  \\  |/  (           ||
-                ||            )  \\ |/  (           ||
-                 ||           /-- \@)--\         ||
+                              
+                ${RED}|||||||${RESET}\\\  )   %)  (%   (  ///${RED}|||||||
+                ||           ${RESET})  \\  |/  (           ${RED}||
+                ||            ${RESET})  \\ |/  (           ${RED}||
+                 ||           ${RESET}/-- \@)--\         ${RED}||
                  ||       |              |       ||
                 ||         ||            ||         ||
                 ||         |||          |||         ||
                 ||         ||||        ||||         ||
-                |||||||||||||  \|    |/  |||||||||||||
+                |||||||||||||  \|    |/  |||||||||||||${RESET}
 
-EOT
+EOF
 
 }
 
@@ -139,7 +147,7 @@ function finalize_configuration {
 	cd $STARTING_DIRECTORY
 }
 
-
+# Running the script 
 display_intro
 while [ $IS_RUNNING ]
 do
@@ -161,5 +169,7 @@ do
 		break
 	fi
 done
+
+#################################################################################################
 
 exit
