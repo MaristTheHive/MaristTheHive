@@ -41,13 +41,9 @@ function display_intro {
 	cat<<EOF
 
                               /\      /\
-
                               |\\____//|
-
                               (|/    \/ )
-
                               / (    ) \
-                              
                 ${RED}|||||||${RESET}\\\  )   %)  (%   (  ///${RED}|||||||
                 ||           ${RESET})  \\  |/  (           ${RED}||
                 ||            ${RESET})  \\ |/  (           ${RED}||
