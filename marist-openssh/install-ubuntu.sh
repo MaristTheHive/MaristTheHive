@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #################################################################################################
-#                           MARIST SSH HONEYPOT INSTALL SCRIPT v0.1                             #
+#                         MARIST SSH HONEYPOT UBUNTU INSTALL SCRIPT v0.1                        #
 #                             MARIST COLLEGE NETWORKING DEPARTMENT                              #
 #################################################################################################
 
@@ -21,14 +21,7 @@ LOG_DIR=
 RED='\e[0;31m'
 RESET='\e[0m'
 
-#################################################################################################
-
-# Check if user is root
-if [ "$EUID" -ne 0 ]
-then 
-	echo -e "${RED}Please run as root${RESET}"
-	exit 1
-fi
+################################ Installation Functions ######################################
 
 # Display Title Screen
 function display_intro {
@@ -139,6 +132,15 @@ function finalize_configuration {
 	
 	cd $STARTING_DIRECTORY
 }
+
+#################################################################################################
+
+# Check if user is root
+if [ "$EUID" -ne 0 ]
+then 
+	echo -e "${RED}Please run as root${RESET}"
+	exit 1
+fi
 
 # Running the script 
 display_intro
