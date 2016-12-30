@@ -17,15 +17,8 @@ MOD_SSH_2222_DIR=
 IS_RUNNING=true
 LOG_DIR=
 
-# ASCII Art Variables
-BLACK='\e[0;30m'     
+# ASCII Art Variables  
 RED='\e[0;31m'
-GREEN='\e[0;32m'
-YELLOW='\e[0;33m' 
-BLUE='\e[0;34m' 
-PURPLE='\e[0;35m' 
-CYAN='\e[0;36m' 
-WHITE='\e[0;37m'
 RESET='\e[0m'
 
 #################################################################################################
@@ -55,6 +48,7 @@ function display_intro {
                 ||         ||||        ||||         ||
                 |||||||||||||  \|    |/  |||||||||||||${RESET}
 
+                         MARIST SSH HONEYPOT v0.1
             "
 
 }
@@ -62,8 +56,8 @@ function display_intro {
 # Install dependencies 
 function install_dependencies {
 	echo "Installing dependencies..."
-	apt-get update
-	apt-get install wget make zlib1g-dev libssl-dev policycoreutils
+	apt-get update &> /dev/null
+	apt-get install wget make zlib1g-dev libssl-dev policycoreutils &> /dev/null
 }
 
 # Create directory structure
@@ -82,7 +76,7 @@ function create_dir {
 # Function to tailor OpenSSH 22
 function configure_ssh_22 {
 	# Downloading OpenSSH
-	wget -P ${MOD_SSH_22_DIR} ftp://ftp4.usa.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-7.2p1.tar.gz > "${LOG_DIR}/install-22.log"
+	wget -P ${MOD_SSH_22_DIR} ftp://ftp4.usa.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-7.2p1.tar.gz >> "${LOG_DIR}/install-22.log"
 	cd ${MOD_SSH_22_DIR}
 	tar -xf ${MOD_SSH_22_DIR}/openssh-7.2p1.tar.gz >> "${LOG_DIR}/install-22.log"
 	mv ${MOD_SSH_22_DIR}/openssh-7.2p1 ${MOD_SSH_22_DIR}/openssh-7.2p1-22
@@ -111,7 +105,7 @@ function configure_ssh_22 {
 # Function to tailor OpenSSH 2222
 function configure_ssh_2222 {
 	# Downloading OpenSSH
-	wget -P ${MOD_SSH_2222_DIR} ftp://ftp4.usa.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-7.2p1.tar.gz > "${LOG_DIR}/install-2222.log"
+	wget -P ${MOD_SSH_2222_DIR} ftp://ftp4.usa.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-7.2p1.tar.gz >> "${LOG_DIR}/install-2222.log"
 	cd ${MOD_SSH_2222_DIR}
 	tar -xf ${MOD_SSH_2222_DIR}/openssh-7.2p1.tar.gz >> "${LOG_DIR}/install-2222.log"
 	mv ${MOD_SSH_2222_DIR}/openssh-7.2p1 ${MOD_SSH_2222_DIR}/openssh-7.2p1-2222
