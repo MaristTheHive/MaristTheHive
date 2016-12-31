@@ -21,10 +21,10 @@ LOG_DIR=
 RED='\e[0;31m'
 RESET='\e[0m'
 
-################################ Installation Functions ######################################
+################################ Installation Functions ########################################
 
 # Display Title Screen
-function display_intro {
+function display_intro() {
 	echo -e "
 
                              /\      /\\
@@ -47,14 +47,14 @@ function display_intro {
 }
 
 # Install dependencies 
-function install_dependencies {
+function install_dependencies() {
 	echo "Installing dependencies..."
 	apt-get update &> /dev/null
 	apt-get install wget make zlib1g-dev libssl-dev policycoreutils &> /dev/null
 }
 
 # Create directory structure
-function create_dir {
+function create_dir() {
 	mkdir -p /usr/local/source/openssh
 	mkdir /usr/local/source/openssh/openssh-22
 	mkdir /usr/local/source/openssh/openssh-2222
@@ -64,10 +64,12 @@ function create_dir {
 	MOD_SSH_2222_DIR="/usr/local/source/openssh/openssh-2222"
 	LOG_DIR="/var/log/ssh-honeypot"
 	echo "Created ${MOD_SSH_DIR};${MOD_SSH_22_DIR};${MOD_SSH_2222_DIR}"
+	touch "${LOG_DIR}/install-22.log"
+	touch "${LOG_DIR}/install-2222.log"
 }
 
 # Function to tailor OpenSSH 22
-function configure_ssh_22 {
+function configure_ssh_22() {
 	# Downloading OpenSSH
 	wget -P ${MOD_SSH_22_DIR} ftp://ftp4.usa.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-7.2p1.tar.gz >> "${LOG_DIR}/install-22.log"
 	cd ${MOD_SSH_22_DIR}
@@ -96,7 +98,7 @@ function configure_ssh_22 {
 }
 
 # Function to tailor OpenSSH 2222
-function configure_ssh_2222 {
+function configure_ssh_2222() {
 	# Downloading OpenSSH
 	wget -P ${MOD_SSH_2222_DIR} ftp://ftp4.usa.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-7.2p1.tar.gz >> "${LOG_DIR}/install-2222.log"
 	cd ${MOD_SSH_2222_DIR}
@@ -125,7 +127,7 @@ function configure_ssh_2222 {
 }
 
 # Finalizing configurations
-function finalize_configuration {
+function finalize_configuration() {
 	# Finalizing Modifications
 	echo "/usr/local/sbin/sshd-22 -f /usr/local/etc/sshd_config-22 " >> /etc/rc.local
 	echo "/usr/local/sbin/sshd-2222 -f /usr/local/etc/sshd_config-2222 " >> /etc/rc.local
@@ -143,7 +145,7 @@ then
 fi
 
 # Running the script 
-display_intro
+display_intro()
 while [ $IS_RUNNING ]
 do
 	echo -n "Please specify the port that SSH should be changed to (we recommend 48000-65535):"
@@ -155,11 +157,11 @@ do
 	then
 		service ssh restart
 		
-		install_dependencies
-		create_dir
-		configure_ssh_22
-		configure_ssh_2222
-		finalize_configuration
+		install_dependencies()
+		create_dir()
+		configure_ssh_22()
+		configure_ssh_2222()
+		finalize_configuration()
 		IS_RUNNING=false
 		break
 	fi
