@@ -88,7 +88,7 @@ function configure_ssh_22 {
 	cp ${STARTING_DIRECTORY}/build/auth2-pubkey.c ${MOD_SSH_22_DIR}/openssh-7.2p1-22/auth2-pubkey.c
 	cp ${STARTING_DIRECTORY}/build/sshd_config-22 /usr/local/etc/sshd_config-22
 	
-	echo "Compiling & nstalling SSH..."
+	echo "Compiling & installing SSH..."
 	cd ${MOD_SSH_22_DIR}/openssh-7.2p1-22
 	./configure >> "${LOG_DIR}/install-22.log"
 	make >> "${LOG_DIR}/install-22.log"
@@ -131,6 +131,10 @@ function finalize_configuration {
 	# Finalizing Modifications
 	echo "/usr/local/sbin/sshd-22 -f /usr/local/etc/sshd_config-22 " >> /etc/rc.local
 	echo "/usr/local/sbin/sshd-2222 -f /usr/local/etc/sshd_config-2222 " >> /etc/rc.local
+
+
+	/usr/local/sbin/sshd-22 -f /usr/local/etc/sshd_config-22
+	/usr/local/sbin/sshd-2222 -f /usr/local/etc/sshd_config-2222
 	
 	cd $STARTING_DIRECTORY
 }
